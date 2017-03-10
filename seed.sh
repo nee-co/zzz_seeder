@@ -95,7 +95,7 @@ for group_num in $(seq 3 20)
 do
   echo -n "グループ${group_num}作成 ユーザ2参加 ID="
   time curl -sS -sS -X POST -H "Authorization: Bearer $(cat tmp/token2)" ${HOST}/groups \
-                       -F "name=IS-07" -F "note=ITスペシャリスト学科 ${group_num}期のグループ" \
+                       -F "name=IS-$(printf %02d ${group_num})" -F "note=ITスペシャリスト学科 ${group_num}期のグループ" \
                        -F "is_private=false" \
                        -F "image=@${PWD}/images/kong2.png" \
   | jq -r .id | tee tmp/group${group_num}
