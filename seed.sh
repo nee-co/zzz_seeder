@@ -97,7 +97,7 @@ do
   time curl -sS -sS -X POST -H "Authorization: Bearer $(cat tmp/token2)" ${HOST}/groups \
                        -F "name=IS-$(printf %02d ${group_num})" -F "note=ITスペシャリスト学科 ${group_num}期のグループ" \
                        -F "is_private=false" \
-                       -F "image=@${PWD}/images/kong2.png" \
+                       -F "image=@${PWD}/images/group/${group_num}.png" \
   | jq -r .id | tee tmp/group${group_num}
 
   if [ `expr ${group_num} % 2` == 0 ]; then
