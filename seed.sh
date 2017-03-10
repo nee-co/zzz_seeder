@@ -2,7 +2,8 @@
 
 rm tmp/*
 
-HOST=${HOST:="https://api.neec.ooo"} # (local) HOST=http://api.127.0.0.1.nip.io
+HOST=${HOST:="https://api.neec.ooo"}
+# HOST=${HOST:="http://api.127.0.0.1.nip.io"}
 echo ${HOST}
 
 # User
@@ -25,7 +26,7 @@ time curl -sS -X POST ${HOST}/events \
      -H "Authorization: Bearer $(cat tmp/token1)" \
      -F "title=androidもくもく会" \
      -F "body=<${PWD}/texts/android.md" \
-     -F "start_date=2017-01-01" \
+     -F "start_date=2018-01-01" \
      -F "image=@${PWD}/images/kong.png" \
 | jq -r .id | tee tmp/event1
 time curl -X PUT ${HOST}/events/$(cat tmp/event1)/public -H "Authorization: Bearer $(cat tmp/token1)"
@@ -45,7 +46,7 @@ time curl -sS -X POST ${HOST}/events \
      -H "Authorization: Bearer $(cat tmp/token1)" \
      -F "title=非公開androidもくもく会" \
      -F "body=<${PWD}/texts/markdown.md" \
-     -F "start_date=2017-01-01" \
+     -F "start_date=2018-01-01" \
      -F "image=@${PWD}/images/kong.gif" \
 | jq -r .id | tee tmp/event2
 
@@ -56,7 +57,7 @@ do
        -H "Authorization: Bearer $(cat tmp/token2)" \
        -F "title=もくもく会#${event_num}" \
        -F "body=<${PWD}/texts/markdown.md" \
-       -F "start_date=2017-01-${event_num}" \
+       -F "start_date=2018-01-${event_num}" \
        -F "image=@${PWD}/images/kong2.png" \
   | jq -r .id | tee tmp/event${event_num}
   time curl -X PUT ${HOST}/events/$(cat tmp/event${event_num})/public -H "Authorization: Bearer $(cat tmp/token2)"
@@ -94,9 +95,9 @@ for group_num in $(seq 3 20)
 do
   echo -n "グループ${group_num}作成 ユーザ2参加 ID="
   time curl -sS -sS -X POST -H "Authorization: Bearer $(cat tmp/token2)" ${HOST}/groups \
-                       -F "name=IS-07" -F "note=ITスペシャリスト学科 ${group_num}期のグループ" \
+                       -F "name=IS-$(printf %02d ${group_num})" -F "note=ITスペシャリスト学科 ${group_num}期のグループ" \
                        -F "is_private=false" \
-                       -F "image=@${PWD}/images/kong2.png" \
+                       -F "image=@${PWD}/images/group/${group_num}.png" \
   | jq -r .id | tee tmp/group${group_num}
 
   if [ `expr ${group_num} % 2` == 0 ]; then
