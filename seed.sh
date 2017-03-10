@@ -2,7 +2,8 @@
 
 rm tmp/*
 
-HOST=${HOST:="https://api.neec.ooo"} # (local) HOST=http://api.127.0.0.1.nip.io
+HOST=${HOST:="https://api.neec.ooo"}
+# HOST=${HOST:="http://api.127.0.0.1.nip.io"}
 echo ${HOST}
 
 # User
